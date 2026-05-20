@@ -29,7 +29,7 @@ jobs:
           API_KEY: ${{ secrets.RANSOMWARE_LIVE_API_KEY }}
         run: |
           # Extract group names into an array safely
-          groups=$(jq -r 'if type=="array" then .[] | select(type=="object") | .name else empty end' data/groups.json)
+          groups=$(jq -r 'if .groups then .groups[]?.group else empty end' data/groups.json)
           
           if [ -z "$groups" ]; then
             echo "Error: Failed to parse groups from API response. Raw response was:"
@@ -42,26 +42,26 @@ jobs:
               echo "Fetching historical data for group: $group"
               mkdir -p "data/groups/$group"
               
-              curl -s -H "X-API-KEY: $API_KEY" "https://api-pro.ransomware.live/groups/$group" > "data/groups/$group/info.json" || echo "{}" > "data/groups/$group/info.json"
-              curl -s -H "X-API-KEY: $API_KEY" "https://api-pro.ransomware.live/victims/?group=$group" > "data/groups/$group/victims.json" || echo "[]" > "data/groups/$group/victims.json"
-              curl -s -H "X-API-KEY: $API_KEY" "https://api-pro.ransomware.live/iocs/$group" > "data/groups/$group/iocs.json" || echo "{}" > "data/groups/$group/iocs.json"
-              curl -s -H "X-API-KEY: $API_KEY" "https://api-pro.ransomware.live/yara/$group" > "data/groups/$group/yara.json" || echo "[]" > "data/groups/$group/yara.json"
+              curl -s -H "X-API-KEY: $API_KEY" "https://api-pro.ransomware.live/groups/$group" > "data/groups/$group/info.json" || echo "{}" > "data/groups/$group/info.json" || true
+              curl -s -H "X-API-KEY: $API_KEY" "https://api-pro.ransomware.live/victims/?group=$group" > "data/groups/$group/victims.json" || echo "[]" > "data/groups/$group/victims.json" || true
+              curl -s -H "X-API-KEY: $API_KEY" "https://api-pro.ransomware.live/iocs/$group" > "data/groups/$group/iocs.json" || echo "{}" > "data/groups/$group/iocs.json" || true
+              curl -s -H "X-API-KEY: $API_KEY" "https://api-pro.ransomware.live/yara/$group" > "data/groups/$group/yara.json" || echo "[]" > "data/groups/$group/yara.json" || true
               
               # Negotiations
-              curl -s -H "X-API-KEY: $API_KEY" "https://api-pro.ransomware.live/negotiations/$group" > "data/groups/$group/negotiations.json" || echo "[]" > "data/groups/$group/negotiations.json"
+              curl -s -H "X-API-KEY: $API_KEY" "https://api-pro.ransomware.live/negotiations/$group" > "data/groups/$group/negotiations.json" || echo "[]" > "data/groups/$group/negotiations.json" || true
               chats=$(jq -r '.[].id' "data/groups/$group/negotiations.json" 2>/dev/null || echo "")
               for chat in $chats; do
                  if [ "$chat" != "null" ] && [ -n "$chat" ]; then
-                   curl -s -H "X-API-KEY: $API_KEY" "https://api-pro.ransomware.live/negotiations/$group/$chat" > "data/groups/$group/chat_$chat.json"
+                   curl -s -H "X-API-KEY: $API_KEY" "https://api-pro.ransomware.live/negotiations/$group/$chat" > "data/groups/$group/chat_$chat.json" || true
                  fi
               done
 
               # Ransom notes
-              curl -s -H "X-API-KEY: $API_KEY" "https://api-pro.ransomware.live/ransomnotes/$group" > "data/groups/$group/notes_list.json" || echo "[]" > "data/groups/$group/notes_list.json"
+              curl -s -H "X-API-KEY: $API_KEY" "https://api-pro.ransomware.live/ransomnotes/$group" > "data/groups/$group/notes_list.json" || echo "[]" > "data/groups/$group/notes_list.json" || true
               notes=$(jq -r '.[]?' "data/groups/$group/notes_list.json" 2>/dev/null || echo "")
               for note in $notes; do
                  if [ "$note" != "null" ] && [ -n "$note" ]; then
-                   curl -s -H "X-API-KEY: $API_KEY" "https://api-pro.ransomware.live/ransomnotes/$group/$note" > "data/groups/$group/note_$note.json"
+                   curl -s -H "X-API-KEY: $API_KEY" "https://api-pro.ransomware.live/ransomnotes/$group/$note" > "data/groups/$group/note_$note.json" || true
                  fi
               done
               
