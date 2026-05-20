@@ -1,0 +1,56 @@
+name: Update Data Hourly
+
+on:
+  schedule:
+    - cron: '0 * * * *' # Runs at the top of every hour
+  workflow_dispatch:
+
+jobs:
+  fetch-and-commit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Create data directory
+        run: mkdir -p data/groups
+
+      - name: Fetch Global Data
+        env:
+          API_KEY: ${{ secrets.RANSOMWARE_LIVE_API_KEY }}
+        run: |
+          curl -s -H "X-API-KEY: $API_KEY" https://api-pro.ransomware.live/recentvictims > data/recentvictims.json
+          curl -s -H "X-API-KEY: $API_KEY" https://api-pro.ransomware.live/groups > data/groups.json
+          curl -s -H "X-API-KEY: $API_KEY" https://api-pro.ransomware.live/stats > data/stats.json
+          curl -s -H "X-API-KEY: $API_KEY" https://api-pro.ransomware.live/listsectors > data/sectors.json
+          curl -s -H "X-API-KEY: $API_KEY" https://api-pro.ransomware.live/8k > data/8k.json
+          curl -s -H "X-API-KEY: $API_KEY" https://api-pro.ransomware.live/press/recent > data/press.json
+
+      - name: Fetch Data for Active Groups Only
+        env:
+          API_KEY: ${{ secrets.RANSOMWARE_LIVE_API_KEY }}
+        run: |
+          # Parse recent victims to find groups with recent activity
+          active_groups=$(jq -r '.[].group' data/recentvictims.json | sort -u)
+          
+          for group in $active_groups; do
+            if [ "$group" != "null" ] && [ -n "$group" ]; then
+              echo "Incremental update for active group: $group"
+              mkdir -p "data/groups/$group"
+              
+              curl -s -H "X-API-KEY: $API_KEY" "https://api-pro.ransomware.live/groups/$group" > "data/groups/$group/info.json" || echo "{}" > "data/groups/$group/info.json"
+              curl -s -H "X-API-KEY: $API_KEY" "https://api-pro.ransomware.live/victims/?group=$group" > "data/groups/$group/victims.json" || echo "[]" > "data/groups/$group/victims.json"
+              curl -s -H "X-API-KEY: $API_KEY" "https://api-pro.ransomware.live/iocs/$group" > "data/groups/$group/iocs.json" || echo "{}" > "data/groups/$group/iocs.json"
+            fi
+          done
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add data/
+          git diff --quiet && git diff --staged --quiet || git commit -m "Automated incremental data update [skip ci]"
+          git push

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ransomware Group Details</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar glass-panel">
+            <div class="logo-area">
+                <i class="fa-solid fa-shield-virus neon-icon"></i>
+                <h2>RansomTracker</h2>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+                <a href="#group-overview" class="nav-link active"><i class="fa-solid fa-circle-info"></i> Overview</a>
+                <a href="#group-victims" class="nav-link"><i class="fa-solid fa-users-slash"></i> Victims</a>
+                <a href="#group-iocs" class="nav-link"><i class="fa-solid fa-spider"></i> IOCs</a>
+                <a href="#group-notes" class="nav-link"><i class="fa-solid fa-file-lines"></i> Ransom Notes</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div>
+                    <h1 id="group-title">Loading Group...</h1>
+                    <p class="subtitle" id="group-description">Fetching intelligence...</p>
+                </div>
+            </header>
+
+            <section id="group-overview" class="metrics-grid">
+                <div class="metric-card glass-panel">
+                    <div class="metric-icon"><i class="fa-solid fa-calendar-plus"></i></div>
+                    <div class="metric-info">
+                        <h3>First Seen</h3>
+                        <p id="first-seen" class="metric-value">...</p>
+                    </div>
+                </div>
+                <div class="metric-card glass-panel">
+                    <div class="metric-icon"><i class="fa-solid fa-calendar-check"></i></div>
+                    <div class="metric-info">
+                        <h3>Last Seen</h3>
+                        <p id="last-seen" class="metric-value">...</p>
+                    </div>
+                </div>
+                <div class="metric-card glass-panel">
+                    <div class="metric-icon"><i class="fa-solid fa-globe"></i></div>
+                    <div class="metric-info">
+                        <h3>Total Victims</h3>
+                        <p id="group-victim-count" class="metric-value">...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Active Locations / TTPs -->
+            <section class="charts-grid mt-4">
+                <div class="chart-card glass-panel">
+                    <h3>Known Leak Sites</h3>
+                    <ul id="leak-sites" style="list-style: none; color: var(--text-muted); line-height: 1.8;">
+                        <li>Loading...</li>
+                    </ul>
+                </div>
+                <div class="chart-card glass-panel">
+                    <h3>Tools & Vulnerabilities</h3>
+                    <div id="tools-cves" style="color: var(--text-muted); line-height: 1.8;">
+                        Loading...
+                    </div>
+                </div>
+            </section>
+
+            <!-- Victims Table -->
+            <section id="group-victims" class="table-section glass-panel mt-4">
+                <div class="section-header">
+                    <h3>Recent Victims</h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="data-table" id="group-victims-table">
+                        <thead>
+                            <tr>
+                                <th>Victim</th>
+                                <th>Attack Date</th>
+                                <th>Country</th>
+                                <th>Sector</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td colspan="4">Loading data...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- IOCs -->
+            <section id="group-iocs" class="table-section glass-panel mt-4">
+                <div class="section-header">
+                    <h3>Indicators of Compromise (IOCs)</h3>
+                </div>
+                <div style="color: var(--text-muted); padding: 1rem;" id="iocs-content">
+                    Loading IOCs...
+                </div>
+            </section>
+
+            <!-- Negotiations -->
+            <section id="group-negotiations" class="table-section glass-panel mt-4">
+                <div class="section-header">
+                    <h3>Negotiation Chat Logs</h3>
+                </div>
+                <div style="color: var(--text-muted); padding: 1rem;" id="negotiations-content">
+                    Loading negotiations...
+                </div>
+            </section>
+
+            <!-- Ransom Notes -->
+            <section id="group-notes" class="table-section glass-panel mt-4">
+                <div class="section-header">
+                    <h3>Ransom Notes</h3>
+                </div>
+                <div style="color: var(--text-muted); padding: 1rem;" id="notes-content">
+                    Loading notes...
+                </div>
+            </section>
+
+            <!-- YARA Rules -->
+            <section id="group-yara" class="table-section glass-panel mt-4">
+                <div class="section-header">
+                    <h3>YARA Rules</h3>
+                </div>
+                <div style="color: var(--text-muted); padding: 1rem;" id="yara-content">
+                    Loading YARA rules...
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Custom JS -->
+    <script src="js/group.js"></script>
+</body>
+</html>

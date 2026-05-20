@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Groups - Ransomware Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar glass-panel">
+            <div class="logo-area">
+                <i class="fa-solid fa-shield-virus neon-icon"></i>
+                <h2>RansomTracker</h2>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-link"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+                <a href="victims.html" class="nav-link"><i class="fa-solid fa-users-slash"></i> All Victims</a>
+                <a href="groups.html" class="nav-link active"><i class="fa-solid fa-user-ninja"></i> All Groups</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-bar">
+                <div>
+                    <h1>Active Ransomware Groups</h1>
+                    <p class="subtitle">Complete directory of tracked threat actors</p>
+                </div>
+            </header>
+
+            <section class="table-section glass-panel mt-4">
+                <div class="section-header">
+                    <h3>Group Search</h3>
+                    <div class="search-box">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" id="search-groups" placeholder="Search by name or description...">
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="data-table" id="groups-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Locations (Active/Total)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td colspan="3">Loading data...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="js/groups.js"></script>
+</body>
+</html>

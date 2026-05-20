@@ -1,0 +1,6 @@
+[{"filename": "0apt.yar", "content": "rule 0apt {
+  meta:
+    description = \"Detects 0apt ransomware\"
+  condition:
+    true
+}"}]

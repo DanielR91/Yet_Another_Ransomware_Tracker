@@ -1,0 +1,301 @@
+{
+  "added_date": "2026-01-28",
+  "altname": null,
+  "description": "The group appears unreliable. Most, if not all, of its alleged victims cannot be verified and appear to be randomly selected organizations. WE HAVE DECIDED TO REMOVE ENTRIES FOR THIS GROUP",
+  "locations": [
+    {
+      "available": false,
+      "enabled": true,
+      "fqdn": "oaptxiyisljt2kv3we2we34kuudmqda7f2geffoylzpeo7ourhtz4dad.onion",
+      "slug": "http://oaptxiyisljt2kv3we2we34kuudmqda7f2geffoylzpeo7ourhtz4dad.onion",
+      "title": "404 - Compromised",
+      "type": "DLS"
+    }
+  ],
+  "name": "0apt",
+  "tools": [],
+  "ttps": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_details": "",
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1133",
+          "technique_name": "External Remote Services"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1566",
+          "technique_name": "Phishing"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1566.001",
+          "technique_name": "Phishing: Spearphishing Attachment"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0002",
+      "tactic_name": "Execution",
+      "techniques": [
+        {
+          "technique_details": "",
+          "technique_id": "T1047",
+          "technique_name": "Windows Management Instrumentation"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1059.001",
+          "technique_name": "Command and Scripting Interpreter: PowerShell"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1204.002",
+          "technique_name": "User Execution: Malicious File"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_details": "",
+          "technique_id": "T1053.005",
+          "technique_name": "Scheduled Task/Job: Scheduled Task"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1547.001",
+          "technique_name": "Boot or Logon Autostart Execution: Registry Run Keys"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_details": "",
+          "technique_id": "T1014",
+          "technique_name": "Rootkit"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1027",
+          "technique_name": "Obfuscated Files or Information"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1036",
+          "technique_name": "Masquerading"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1055",
+          "technique_name": "Process Injection"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1070",
+          "technique_name": "Indicator Removal"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1140",
+          "technique_name": "Deobfuscate/Decode Files or Information"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1562.001",
+          "technique_name": "Impair Defenses: Disable or Modify Tools"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1564",
+          "technique_name": "Hidden Artifacts"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1622",
+          "technique_name": "Debugger Evasion"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1672",
+          "technique_name": "Email Spoofing"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1678",
+          "technique_name": "Delay Execution"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_details": "",
+          "technique_id": "T1003",
+          "technique_name": "OS Credential Dumping"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1003.001",
+          "technique_name": "OS Credential Dumping: LSASS Memory"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1555",
+          "technique_name": "Credentials from Password Stores"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_details": "",
+          "technique_id": "T1082",
+          "technique_name": "System Information Discovery"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1083",
+          "technique_name": "File and Directory Discovery"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1135",
+          "technique_name": "Network Share Discovery"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1526",
+          "technique_name": "Cloud Service Discovery"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
+      "techniques": [
+        {
+          "technique_details": "",
+          "technique_id": "T1021.001",
+          "technique_name": "Remote Services: Remote Desktop Protocol"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1021.002",
+          "technique_name": "Remote Services: SMB/Windows Admin Shares"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1570",
+          "technique_name": "Lateral Tool Transfer"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_details": "",
+          "technique_id": "T1005",
+          "technique_name": "Data from Local System"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1039",
+          "technique_name": "Data from Network Shared Drive"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1056",
+          "technique_name": "Input Capture"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1119",
+          "technique_name": "Automated Collection"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1560",
+          "technique_name": "Archive Collected Data"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_details": "",
+          "technique_id": "T1041",
+          "technique_name": "Exfiltration Over C2 Channel"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1567",
+          "technique_name": "Exfiltration Over Web Service"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0011",
+      "tactic_name": "Command and Control",
+      "techniques": [
+        {
+          "technique_details": "",
+          "technique_id": "T1071.001",
+          "technique_name": "Application Layer Protocol: Web Protocols"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1573",
+          "technique_name": "Encrypted Channel"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_details": "",
+          "technique_id": "T1485",
+          "technique_name": "Data Destruction"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1486",
+          "technique_name": "Data Encrypted for Impact"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1489",
+          "technique_name": "Service Stop"
+        },
+        {
+          "technique_details": "",
+          "technique_id": "T1490",
+          "technique_name": "Inhibit System Recovery"
+        }
+      ]
+    }
+  ],
+  "url": "https://www.ransomware.live/group/0apt"
+}
