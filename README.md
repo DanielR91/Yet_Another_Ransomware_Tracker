@@ -1,5 +1,7 @@
 # YART: Yet Another Ransomware Tracker 🛡️
 
+**[🚀 View Live Dashboard](https://DanielR91.github.io/Yet_Another_Ransomware_Tracker/)**
+
 **YART** is an automated, headless, serverless threat intelligence dashboard for tracking ransomware groups, their victims, and related cyber intelligence. 
 
 Powered entirely by GitHub Pages and GitHub Actions, YART provides a real-time, single-pane-of-glass overview of ransomware activity using the [Ransomware.live PRO API](https://api-pro.ransomware.live/docs). It operates automatically with zero local hosting or traditional backend servers required.
