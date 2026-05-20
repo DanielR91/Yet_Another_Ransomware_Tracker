@@ -1,0 +1,1 @@
+{"client": "staging-coupler1j@icloud.com", "group": "kawa4096", "filter_type": null, "ioc_types": ["sha256", "email", "tox"], "iocs": {"sha256": ["f3a6d4ccdd0f663269c3909e74d6847608b8632fb2814b0436a4532b8281e617"], "email": ["kawa4096@onionmail.org"], "tox": ["6A340207246B47E37F6D094D2236E5C6242B6E4461EEF8021FED2C9855240C3E11AEE886FAAF"]}}

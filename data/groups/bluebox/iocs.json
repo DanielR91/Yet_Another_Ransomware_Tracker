@@ -1,0 +1,1 @@
+{"client": "staging-coupler1j@icloud.com", "group": "bluebox", "filter_type": null, "ioc_types": ["email", "tox"], "iocs": {"email": ["aocpocqotox@onionmail.org"], "tox": ["E39D0A412302DF31B24613AA88D5859A5432A5FCBAD25917E93DA84D56CB411F88119E8AEB78"]}}

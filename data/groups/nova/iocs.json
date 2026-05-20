@@ -1,0 +1,1 @@
+{"client": "staging-coupler1j@icloud.com", "group": "nova", "filter_type": null, "ioc_types": ["session", "tox"], "iocs": {"session": ["054f55ec93aca9bac362b9d91eff36a7ce451e7caba47c0b2e004ba429f9529c79"], "tox": ["8E9A6195A769FE7115F087C61D75CF32874C339B3AB0947D07480C9A8A12DA5009151BE6A51F"]}}

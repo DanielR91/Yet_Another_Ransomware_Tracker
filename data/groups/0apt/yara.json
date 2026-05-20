@@ -1,6 +1,1 @@
-[{"filename": "0apt.yar", "content": "rule 0apt {
-  meta:
-    description = \"Detects 0apt ransomware\"
-  condition:
-    true
-}"}]
+{"client": "staging-coupler1j@icloud.com", "group": "0apt", "count": 1, "rules": [{"filename": "0apt.yar", "content": "/*\n0apt ransomware\n*/\n\nrule 0apt_Ransomnote\n{\n    meta:\n        author = \"ransomware.live\"\n        family = \"ransomware.0apt\"\n        description = \"Detects 0apt ransomware ransom note or artifact\"\n        date = \"2026-05-04\"\n        severity = 7\n        score = 70\n\n    strings:\n        $name1 = \"0apt\" ascii nocase\n        $name2 = \"0APT\" ascii\n        $onion  = \"0apt.onion\" ascii nocase\n\n    condition:\n        any of them\n}\n"}]}

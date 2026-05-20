@@ -1,1 +1,1 @@
-{"ip": ["1.2.3.4", "5.6.7.8"], "md5": ["d41d8cd98f00b204e9800998ecf8427e"]}
+{"client": "staging-coupler1j@icloud.com", "group": "0apt", "filter_type": null, "ioc_types": ["md5"], "iocs": {"md5": ["370fbcc6711fb983ae4679f02c5ac461", "29144c2f5acd859adf08d42ffcd74f50", "fb42dec2c39cd7884ca4cb6b76308f51", "0f7d721e4e5e2ce0a5c629f2fd4ac572"]}}

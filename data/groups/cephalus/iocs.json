@@ -1,0 +1,1 @@
+{"client": "staging-coupler1j@icloud.com", "group": "cephalus", "filter_type": null, "ioc_types": ["ip"], "iocs": {"ip": ["46.17.42.64"]}}

@@ -1,0 +1,1 @@
+{"client": "staging-coupler1j@icloud.com", "group": "cry0", "filter_type": null, "ioc_types": ["tox", "ip"], "iocs": {"tox": ["54E9450799AFBBA90992E3C40F552C8C05D5765144396C6A1A622FD9DABD01101F9DC0CF90F4"], "ip": ["45.227.253.59:3111"]}}

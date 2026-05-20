@@ -1,0 +1,1 @@
+{"client": "staging-coupler1j@icloud.com", "group": "cloak", "filter_type": null, "ioc_types": ["md5"], "iocs": {"md5": ["31c6032e6cfa6c514c0b0b30fe75c66e"]}}
