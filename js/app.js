@@ -1,4 +1,15 @@
 document.addEventListener('DOMContentLoaded', async () => {
+    // Robust JSON parser helper
+    const safeParseJson = async (res, fallback) => {
+        if (!res || !res.ok) return fallback;
+        try {
+            return await res.json();
+        } catch (e) {
+            console.error("Error parsing JSON:", e);
+            return fallback;
+        }
+    };
+
     // 1. Fetch Data
     const [recentVictimsRes, groupsRes, statsRes, sectorsRes, secRes, pressRes] = await Promise.all([
         fetch('data/recentvictims.json').catch(() => null),
@@ -9,14 +20,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         fetch('data/press.json').catch(() => null)
     ]);
 
-    let victims = [], groups = [], stats = {}, sectors = [], sec8k = [], press = [];
-
-    if (recentVictimsRes && recentVictimsRes.ok) victims = await recentVictimsRes.json();
-    if (groupsRes && groupsRes.ok) groups = await groupsRes.json();
-    if (statsRes && statsRes.ok) stats = await statsRes.json();
-    if (sectorsRes && sectorsRes.ok) sectors = await sectorsRes.json();
-    if (secRes && secRes.ok) sec8k = await secRes.json();
-    if (pressRes && pressRes.ok) press = await pressRes.json();
+    let victims = await safeParseJson(recentVictimsRes, []);
+    let groupsData = await safeParseJson(groupsRes, {});
+    let groups = groupsData.groups || (Array.isArray(groupsData) ? groupsData : []);
+    let stats = await safeParseJson(statsRes, {});
+    let sectors = await safeParseJson(sectorsRes, []);
+    let sec8k = await safeParseJson(secRes, []);
+    let press = await safeParseJson(pressRes, []);
 
     // Update time based on last victim
     if (victims.length > 0) {
@@ -35,36 +45,43 @@ document.addEventListener('DOMContentLoaded', async () => {
     const tbody = document.querySelector('#victims-table tbody');
     if (tbody) {
         tbody.innerHTML = '';
-        victims.slice(0, 5).forEach(v => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td><strong>${v.victim || v.post_title || 'Unknown'}</strong></td>
-                <td><a href="group.html?name=${encodeURIComponent(v.group || v.group_name || '')}" class="group-badge" style="text-decoration: none;">${v.group || v.group_name || 'Unknown'}</a></td>
-                <td>${v.attackdate || v.discovered || 'N/A'}</td>
-                <td>${v.country || 'N/A'}</td>
-                <td>${v.url ? `<a href="${v.url}" target="_blank" class="url-link">Link <i class="fa-solid fa-external-link-alt" style="font-size:0.7em;"></i></a>` : 'N/A'}</td>
-            `;
-            tbody.appendChild(tr);
-        });
+        if (Array.isArray(victims)) {
+            victims.slice(0, 5).forEach(v => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${v.victim || v.post_title || 'Unknown'}</strong></td>
+                    <td><a href="group.html?name=${encodeURIComponent(v.group || v.group_name || '')}" class="group-badge" style="text-decoration: none;">${v.group || v.group_name || 'Unknown'}</a></td>
+                    <td>${v.attackdate || v.discovered || 'N/A'}</td>
+                    <td>${v.country || 'N/A'}</td>
+                    <td>${v.url ? `<a href="${v.url}" target="_blank" class="url-link">Link <i class="fa-solid fa-external-link-alt" style="font-size:0.7em;"></i></a>` : 'N/A'}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        } else {
+            tbody.innerHTML = '<tr><td colspan="5">No victim data available.</td></tr>';
+        }
     }
 
     // 4. Populate Groups Table (Top 5 only)
     const groupsTbody = document.querySelector('#groups-table tbody');
     if (groupsTbody) {
         groupsTbody.innerHTML = '';
-        groups.slice(0, 5).forEach(g => {
-            const tr = document.createElement('tr');
-            const desc = g.description ? (g.description.length > 100 ? g.description.substring(0, 100) + '...' : g.description) : 'No description available';
-            const locationsCount = g.locations ? g.locations.length : 0;
-            const activeLocations = g.locations ? g.locations.filter(l => l.available).length : 0;
-            const badgeStyle = activeLocations > 0 ? 'color: #34d399; background: rgba(52, 211, 153, 0.15); border-color: rgba(52, 211, 153, 0.3);' : '';
-            tr.innerHTML = `
-                <td><strong><a href="group.html?name=${encodeURIComponent(g.name || '')}" class="url-link">${g.name || 'Unknown'}</a></strong></td>
-                <td><small style="color: #94a3b8;">${desc}</small></td>
-                <td><span class="group-badge" style="${badgeStyle}">${activeLocations} / ${locationsCount} active</span></td>
-            `;
-            groupsTbody.appendChild(tr);
-        });
+        if (groups.length > 0) {
+            groups.slice(0, 5).forEach(g => {
+                const tr = document.createElement('tr');
+                const groupName = g.group || g.name || 'Unknown';
+                const altName = g.altname || 'None';
+                const victimsCount = g.victims !== undefined ? g.victims : 0;
+                tr.innerHTML = `
+                    <td><strong><a href="group.html?name=${encodeURIComponent(groupName)}" class="url-link">${groupName}</a></strong></td>
+                    <td><small style="color: #94a3b8;">Alt Name: ${altName}</small></td>
+                    <td><span class="group-badge" style="color: #38bdf8; background: rgba(56, 189, 248, 0.15); border-color: rgba(56, 189, 248, 0.3);">${victimsCount} victims</span></td>
+                `;
+                groupsTbody.appendChild(tr);
+            });
+        } else {
+            groupsTbody.innerHTML = '<tr><td colspan="3">No group data available.</td></tr>';
+        }
     }
 
     // 5. Render Charts (Chart.js)

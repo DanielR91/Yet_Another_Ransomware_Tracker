@@ -5,7 +5,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     let victims = [];
     try {
         const res = await fetch('data/recentvictims.json');
-        if (res.ok) victims = await res.json();
+        if (res.ok) {
+            const data = await res.json();
+            victims = Array.isArray(data) ? data : (data.victims || data.recent_victims || []);
+        }
     } catch (e) {
         console.error("Failed to load victims", e);
     }
