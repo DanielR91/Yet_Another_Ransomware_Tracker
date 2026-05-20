@@ -20,9 +20,8 @@ jobs:
         env:
           API_KEY: ${{ secrets.RANSOMWARE_LIVE_API_KEY }}
         run: |
-          curl -s -H "X-API-KEY: $API_KEY" https://api-pro.ransomware.live/recentvictims > data/recentvictims.json
+          curl -s -H "X-API-KEY: $API_KEY" https://api-pro.ransomware.live/victims/recent > data/recentvictims.json
           curl -s -H "X-API-KEY: $API_KEY" https://api-pro.ransomware.live/groups > data/groups.json
-          curl -s -H "X-API-KEY: $API_KEY" https://api-pro.ransomware.live/recentcyberattacks > data/recentcyberattacks.json || echo "[]" > data/recentcyberattacks.json
 
       - name: Fetch Detailed Group Data
         env:

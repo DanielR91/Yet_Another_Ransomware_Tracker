@@ -23,7 +23,7 @@ jobs:
           API_KEY: ${{ secrets.RANSOMWARE_LIVE_API_KEY }}
         run: |
           # Fetch Recent Victims with fallback on failure
-          curl -s -f -H "X-API-KEY: $API_KEY" https://api-pro.ransomware.live/recentvictims -o data/recentvictims.json || echo "[]" > data/recentvictims.json
+          curl -s -f -H "X-API-KEY: $API_KEY" https://api-pro.ransomware.live/victims/recent -o data/recentvictims.json || echo "[]" > data/recentvictims.json
           # Ensure JSON validity before parsing
           if jq -e . data/recentvictims.json > /dev/null 2>&1; then
             active_groups=$(jq -r 'if type=="array" then .[]?.group elif .groups then .groups[]?.group else empty end' data/recentvictims.json | sort -u)
