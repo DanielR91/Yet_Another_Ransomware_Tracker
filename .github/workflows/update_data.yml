@@ -22,19 +22,27 @@ jobs:
         env:
           API_KEY: ${{ secrets.RANSOMWARE_LIVE_API_KEY }}
         run: |
-          curl -s -H "X-API-KEY: $API_KEY" https://api-pro.ransomware.live/recentvictims > data/recentvictims.json
-          curl -s -H "X-API-KEY: $API_KEY" https://api-pro.ransomware.live/groups > data/groups.json
-          curl -s -H "X-API-KEY: $API_KEY" https://api-pro.ransomware.live/stats > data/stats.json
-          curl -s -H "X-API-KEY: $API_KEY" https://api-pro.ransomware.live/listsectors > data/sectors.json
-          curl -s -H "X-API-KEY: $API_KEY" https://api-pro.ransomware.live/8k > data/8k.json
-          curl -s -H "X-API-KEY: $API_KEY" https://api-pro.ransomware.live/press/recent > data/press.json
+           # Fetch Recent Victims with fallback on failure
+           curl -s -f -H "X-API-KEY: $API_KEY" https://api-pro.ransomware.live/recentvictims -o data/recentvictims.json || echo "[]" > data/recentvictims.json
+           # Ensure JSON validity before parsing
+           if jq -e . data/recentvictims.json > /dev/null 2>&1; then
+             active_groups=$(jq -r 'if type=="array" then .[]?.group elif .groups then .groups[]?.group else empty end' data/recentvictims.json | sort -u)
+           else
+             echo "Warning: recentvictims.json is not valid JSON, skipping active groups."
+             active_groups=""
+           fi || echo "[]" > data/recentvictims.json
+           curl -s -f -H "X-API-KEY: $API_KEY" https://api-pro.ransomware.live/groups -o data/groups.json || echo "{}" > data/groups.json
+           curl -s -f -H "X-API-KEY: $API_KEY" https://api-pro.ransomware.live/stats -o data/stats.json || echo "{}" > data/stats.json
+           curl -s -f -H "X-API-KEY: $API_KEY" https://api-pro.ransomware.live/listsectors -o data/sectors.json || echo "[]" > data/sectors.json
+           curl -s -f -H "X-API-KEY: $API_KEY" https://api-pro.ransomware.live/8k -o data/8k.json || echo "[]" > data/8k.json
+           curl -s -f -H "X-API-KEY: $API_KEY" https://api-pro.ransomware.live/press/recent -o data/press.json || echo "[]" > data/press.json
 
       - name: Fetch Data for Active Groups Only
         env:
           API_KEY: ${{ secrets.RANSOMWARE_LIVE_API_KEY }}
         run: |
-          # Parse recent victims to find groups with recent activity safely
-          active_groups=$(jq -r 'if type=="array" then .[] | select(type=="object") | .group else empty end' data/recentvictims.json | sort -u)
+           # Parse recent victims to find groups with recent activity safely (supports both array and "groups" object)
+           active_groups=$(jq -r 'if type=="array" then .[]?.group elif .groups then .groups[]?.group else empty end' data/recentvictims.json | sort -u)
           
           if [ -z "$active_groups" ]; then
             echo "Error: Failed to parse recent victims from API response. Raw response was:"
