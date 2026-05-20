@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    const [info, victims, iocs, yara, negotiations, notesList] = await Promise.all([
+    const [infoData, victimsRaw, iocsRaw, yaraRaw, negotiationsRaw, notesListRaw] = await Promise.all([
         fetchJson('info.json'),
         fetchJson('victims.json'),
         fetchJson('iocs.json'),
@@ -28,6 +28,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         fetchJson('negotiations.json'),
         fetchJson('notes_list.json')
     ]);
+
+    const info = infoData;
+    const victims = victimsRaw ? (victimsRaw.victims || (Array.isArray(victimsRaw) ? victimsRaw : [])) : [];
+    const iocs = iocsRaw ? (iocsRaw.iocs || iocsRaw) : null;
+    const yara = yaraRaw ? (yaraRaw.rules || (Array.isArray(yaraRaw) ? yaraRaw : [])) : [];
+    const negotiations = negotiationsRaw ? (negotiationsRaw.chats || (Array.isArray(negotiationsRaw) ? negotiationsRaw : [])) : [];
+    const notesList = notesListRaw ? (notesListRaw.ransomnotes || (Array.isArray(notesListRaw) ? notesListRaw : [])) : [];
 
     // Populate Info
     if (info) {

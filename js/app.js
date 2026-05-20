@@ -20,13 +20,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         fetch('data/press.json').catch(() => null)
     ]);
 
-    let victims = await safeParseJson(recentVictimsRes, []);
+    let victimsData = await safeParseJson(recentVictimsRes, {});
+    let victims = victimsData.victims || (Array.isArray(victimsData) ? victimsData : []);
     let groupsData = await safeParseJson(groupsRes, {});
     let groups = groupsData.groups || (Array.isArray(groupsData) ? groupsData : []);
     let stats = await safeParseJson(statsRes, {});
-    let sectors = await safeParseJson(sectorsRes, []);
-    let sec8k = await safeParseJson(secRes, []);
-    let press = await safeParseJson(pressRes, []);
+    let sectorsData = await safeParseJson(sectorsRes, {});
+    let sectors = sectorsData.sectors || (Array.isArray(sectorsData) ? sectorsData : []);
+    let secData = await safeParseJson(secRes, {});
+    let sec8k = secData.forms || (Array.isArray(secData) ? secData : []);
+    let pressData = await safeParseJson(pressRes, {});
+    let press = pressData.results || (Array.isArray(pressData) ? pressData : []);
 
     // Update time based on last victim
     if (victims.length > 0) {
@@ -158,13 +162,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     const secFeed = document.getElementById('sec-feed');
     if (secFeed) {
         if (sec8k && sec8k.length > 0) {
-            secFeed.innerHTML = sec8k.slice(0, 20).map(s => `
-                <div style="border-bottom: 1px solid rgba(255,255,255,0.1); padding: 0.8rem 0;">
-                    <div style="color: var(--accent-secondary); font-weight: bold;">${s.companyName} (${s.ticker || s.cik})</div>
-                    <div><small>${s.dateFiled} - Item ${s.item}</small></div>
-                    <div style="margin-top: 0.5rem;"><a href="${s.linkToTxt}" target="_blank" class="url-link">View Filing</a></div>
-                </div>
-            `).join('');
+            secFeed.innerHTML = sec8k.slice(0, 20).map(s => {
+                const company = s.company || s.companyName || s.display_name || 'Unknown';
+                const ticker = s.stockticker || s.ticker || s.cik || '';
+                const date = s.file_date || s.dateFiled || 'N/A';
+                const link = s.link || s.linkToTxt || '#';
+                const form = s.form || '8-K';
+                return `
+                    <div style="border-bottom: 1px solid rgba(255,255,255,0.1); padding: 0.8rem 0;">
+                        <div style="color: var(--accent-secondary); font-weight: bold;">${company} ${ticker ? `(${ticker})` : ''}</div>
+                        <div><small>${date} - ${form}</small></div>
+                        <div style="margin-top: 0.5rem;"><a href="${link}" target="_blank" class="url-link">View Filing</a></div>
+                    </div>
+                `;
+            }).join('');
         } else {
             secFeed.innerHTML = '<p>No 8-K disclosures available.</p>';
         }
